@@ -4,3 +4,4 @@ plugins/
 www/
 out/
 *.log
+__pycache__/
