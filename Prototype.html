@@ -1144,6 +1144,7 @@ $('s-splash').addEventListener('click', e => {
 
 /* ======================= ВЫХОД ======================= */
 function reallyQuit() {
+  if (window.cordova && navigator.app && typeof navigator.app.exitApp === 'function') { navigator.app.exitApp(); return; }
   try { window.close(); } catch (e) {}
   go('s-splash');
   toast('Спасибо за игру!');

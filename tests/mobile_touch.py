@@ -26,4 +26,6 @@ with sync_playwright() as pw:
  page.evaluate('document.dispatchEvent(new Event("resume"))');page.wait_for_function('window.testAudio.some(a=>a.dataset.track==="morning"&&!a.paused)')
  page.evaluate('document.dispatchEvent(new Event("backbutton"))');page.wait_for_selector('#pause.open')
  page.evaluate('document.dispatchEvent(new Event("backbutton"))');page.wait_for_selector('#pause',state='hidden')
- assert not errors,errors;b.close();print(json.dumps({'swipe_no_double_advance':True,'pause_swipe':True,'buttons_and_hide_panel':True,'native_back_and_lifecycle':True,'errors':errors}))
+ page.evaluate('window.cordova={};window.exitCalls=0;navigator.app={exitApp:()=>window.exitCalls++};')
+ page.evaluate('document.dispatchEvent(new Event("backbutton"))');page.locator('#pause [data-act="main-menu"]').tap();page.evaluate('document.dispatchEvent(new Event("backbutton"))');page.wait_for_selector('#s-exit.active');page.locator('[data-act="quit"]').tap();assert page.evaluate('exitCalls')==1
+ assert not errors,errors;b.close();print(json.dumps({'swipe_no_double_advance':True,'pause_swipe':True,'buttons_and_hide_panel':True,'native_back_and_lifecycle':True,'native_exit_dispatch':True,'errors':errors}))
