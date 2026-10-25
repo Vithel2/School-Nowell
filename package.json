@@ -1,6 +1,6 @@
 {
   "name": "school-nowell",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "School's Nowell offline Android test build",
   "scripts": {
@@ -12,6 +12,8 @@
     "cordova-android": "13.0.0"
   },
   "cordova": {
-    "platforms": ["android"]
+    "platforms": [
+      "android"
+    ]
   }
 }

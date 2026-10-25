@@ -143,8 +143,8 @@ button{font-family:inherit}
 /* ---------- buttons / overlays ---------- */
 .btn{background:linear-gradient(#ffd98f,#f0ad4e);border:3px solid #1a1a1a;border-radius:12px;padding:12px 42px;font-size:22px;font-weight:800;color:#181206;cursor:pointer;transition:transform .15s,filter .15s;font-family:inherit;box-shadow:0 10px 20px rgba(0,0,0,.45)}
 .btn:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.06)}
-.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,14,.8);backdrop-filter:blur(5px);opacity:0;visibility:hidden;transition:.3s;z-index:20;padding:20px}
-.overlay.open{opacity:1;visibility:visible}
+.overlay{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;background:rgba(2,6,14,.8);backdrop-filter:blur(5px);opacity:0;visibility:hidden;transition:.3s;z-index:20;padding:20px}
+.overlay.open{opacity:1;visibility:visible;pointer-events:auto}
 .panel{background:linear-gradient(160deg,rgba(6,34,44,.98),rgba(3,18,24,.98));border:2px solid var(--g);padding:30px 38px;max-width:820px;width:min(92vw,820px);max-height:88vh;overflow:auto;text-align:center;border-radius:10px;box-shadow:0 0 50px rgba(0,0,0,.85),inset 0 0 60px rgba(111,232,127,.05);cursor:default}
 .panel h3{color:var(--g);font-size:clamp(21px,2.4vw,28px);margin-bottom:18px;letter-spacing:3px;text-transform:uppercase}
 .panel p{color:#ffe9a8;font-size:clamp(15px,1.6vw,19px);line-height:1.6}
@@ -283,6 +283,85 @@ button{font-family:inherit}
 #s-vn.is-blackout .layer{transition-duration:.12s}
 @media(max-width:540px){.resume{min-height:100px;padding:14px 24px}.resume small{font-size:clamp(24px,6.8vw,34px)}.resume strong{font-size:13px}}
 
+
+/* ---------- phone layouts: size by available height, respect display cutouts ---------- */
+:root{--safe-top:max(8px,env(safe-area-inset-top));--safe-right:max(10px,env(safe-area-inset-right));--safe-bottom:max(8px,env(safe-area-inset-bottom));--safe-left:max(10px,env(safe-area-inset-left))}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+#frame{touch-action:manipulation}
+#s-vn{touch-action:none}
+.main-inner{padding:var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left)}
+.menu-btns{width:min(460px,78vw,calc((100dvh - 100px)*.9));gap:clamp(6px,1.2dvh,12px);margin-top:clamp(26px,9dvh,80px)}
+#s-main>.bg{object-fit:contain;background:#04151c}
+.variants-inner{padding:calc(var(--safe-top) + 2px) var(--safe-right) calc(var(--safe-bottom) + 48px) var(--safe-left);display:grid;grid-template-rows:auto minmax(0,1fr);justify-items:center;gap:8px}
+.header-img{width:auto;max-width:65vw;height:clamp(30px,9dvh,64px);object-fit:contain;animation:none}
+.cards{height:100%;min-height:0;align-items:center;margin:0;gap:clamp(14px,3vw,38px)}
+.card{width:auto;height:100%;max-height:calc(100dvh - 120px);max-width:38vw;aspect-ratio:760/921}
+.card img{width:100%;height:100%;object-fit:contain}
+.nav{bottom:var(--safe-bottom);padding:0 var(--safe-right) 0 var(--safe-left)}
+.back-btn{width:110px;height:44px}.back-btn img{width:100%;height:100%;object-fit:contain}
+.panel{touch-action:pan-y;overscroll-behavior:contain;max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 8px)}
+.p-row,.row-btn,.big{min-height:44px}
+@media(orientation:landscape) and (max-height:600px){
+ .main-inner{padding-top:calc(var(--safe-top) + 54px);padding-bottom:calc(var(--safe-bottom) + 4px)}
+ .menu-btns{width:min(360px,38vw,calc((100dvh - 100px)*.85));margin-top:0;gap:6px}
+ .resume{width:100%;min-height:0;aspect-ratio:2.7/1;margin-top:0;padding:10px 18px}
+ .resume small{font-size:clamp(20px,2.8vw,32px);letter-spacing:-.5px;margin-bottom:2px}
+ .resume strong{font-size:clamp(11px,1.5vw,15px)}
+ #dlg{left:calc(var(--safe-left) + 2px);right:calc(var(--safe-right) + 2px);bottom:var(--safe-bottom);max-width:1050px;margin:0 auto;--c:12px;--t:0px}
+ #dlg .body{min-height:72px;padding:12px 66px 23px 18px}
+ #dlg.named .body{padding-top:29px}
+ #dlg .txt{font-size:clamp(15px,2vw,18px);line-height:1.42}
+ #nameTab{left:18px;top:8px;transform:none;font-size:13px;line-height:1.1}
+ .ctl{top:6px;right:8px;gap:0}
+ .ctl button{width:44px;height:44px}
+ .ctl #bAuto,.ctl #bSkip,.ctl #bHist,.ctl #bHide,#star{display:none}
+ .ctl svg{width:23px;height:23px}
+ #nextMark{right:25px;bottom:13px;width:9px;height:9px;border-width:2px}
+ #pageMark{right:48px;bottom:9px;font-size:10px}
+ #choices{top:var(--safe-top);bottom:calc(var(--dialog-height,100px) + var(--safe-bottom) + 12px);gap:10px}
+ .choice{width:min(88%,700px);min-height:44px;padding:10px 18px;gap:14px;font-size:15px;line-height:1.35}
+ .choice .tri{border-left-width:12px;border-top-width:8px;border-bottom-width:8px}
+ .choice .num{display:none}
+ #pause .panel{width:min(760px,94vw);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:12px;padding:14px 20px}
+ #pause h3{grid-column:1/-1;font-size:18px;margin:0 0 7px;letter-spacing:1px}
+ #pause .p-row{font-size:14px;min-height:44px;padding:9px 7px}
+ #settings .panel{width:min(760px,94vw);padding:15px 22px;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+ #settings .settings-head{grid-column:1/-1;margin:0;padding-bottom:9px;gap:12px}
+ #settings .settings-seal{width:34px;height:34px;font-size:19px;border-radius:9px}
+ #settings h3{font-size:20px}
+ #settings .settings-eyebrow{font-size:8px}
+ #settings .settings-section{display:none}
+ #settings .setting-control{margin:0;padding:10px 12px}
+ #settings .setting-line{font-size:12px;margin-bottom:8px}
+ #settings input[type=range]{height:28px;margin:0;background-size:100% 4px;background-repeat:no-repeat;background-position:center}
+ #settings .range-ends{font-size:9px}
+ #settings .settings-actions{grid-template-columns:1fr 1fr;gap:8px}
+ #settings .setting-toggle{padding:6px 7px;align-items:stretch;flex-direction:column;gap:4px;font-size:11px;text-align:center}
+ #settings .row-btn{min-height:44px;padding:6px 8px}
+ #settings .settings-footer{grid-column:1/-1;margin:0;padding-top:8px}
+ #settings .done-btn{padding:8px 24px;min-height:40px}
+ #help .panel,#history .panel{padding:18px 22px}
+ #help h3,#history h3{font-size:19px;margin-bottom:10px}
+ .help-grid{grid-template-columns:1fr 1fr;gap:8px 20px}
+ .help-grid div{font-size:13px}
+ #histList{max-height:45dvh}
+ .clip-top{padding:var(--safe-top) var(--safe-right) 24px var(--safe-left)}
+ .clip-top button{min-height:44px;padding:10px 15px;font-size:13px}
+ .clip-top span{font-size:11px}
+ .load-kicker{margin-bottom:14px;font-size:8px}
+ .load-emblem{width:44px;height:44px;margin-bottom:16px}.load-emblem span{font-size:19px}
+ .load-title{font-size:34px}.load-subtitle{margin-top:8px;font-size:11px}
+ .load-status{margin-top:20px}.load-bar{margin-bottom:15px}.load-tip{font-size:10px;min-height:28px}
+}
+@media(hover:none), (pointer:coarse){
+ .bg{animation:none;transform:none;will-change:auto}
+ .stone,.card,.header-img,.nav button,.resume,#dlg{filter:none}
+ .stone:hover,.card:hover,.nav button:hover,.resume:hover,.choice:hover{transform:none;filter:none}
+ .overlay,.skip,.resume{backdrop-filter:none}
+ .overlay{background:rgba(2,6,14,.94)}
+ .ctl button,.row-btn{touch-action:manipulation}
+}
+
 </style>
 </head>
 <body>
@@ -349,7 +428,6 @@ button{font-family:inherit}
   </div>
   <div class="nav">
     <button class="back-btn" data-act="to-main" type="button" aria-label="Назад"><img data-a="btn_back" alt="Назад"></button>
-    <button class="next-btn" data-act="next-page" type="button" aria-label="Следующая страница"><img data-a="btn_next" alt=""></button>
   </div>
 </section>
 
@@ -407,6 +485,10 @@ button{font-family:inherit}
   <button class="p-row" data-act="save" type="button"><i>◆</i>Сохранить</button>
   <button class="p-row" data-act="load" type="button"><i>◇</i>Загрузить</button>
   <button class="p-row" data-act="settings" type="button"><i>⚙</i>Настройки</button>
+  <button class="p-row" data-act="auto-read" type="button"><i>▷</i>Авточтение</button>
+  <button class="p-row" data-act="skip-read" type="button"><i>≫</i>Перемотка</button>
+  <button class="p-row" data-act="hide-ui" type="button"><i>◉</i>Скрыть панель</button>
+  <button class="p-row" data-act="favorite" type="button"><i>☆</i>В избранное</button>
   <button class="p-row" data-act="help" type="button"><i>?</i>Как играть</button>
   <button class="p-row" data-act="main-menu" type="button"><i>⌂</i>В главное меню</button>
   <button class="p-row" data-act="exit" type="button"><i>✕</i>Выход</button>
@@ -612,6 +694,7 @@ function applyVol() {
   if (btn) { btn.textContent = cfg.muted ? 'выключен' : 'включён'; btn.setAttribute('aria-pressed', String(cfg.muted)); btn.setAttribute('aria-label', cfg.muted ? 'Включить музыку' : 'Выключить музыку'); }
 }
 function unlockAudio() {
+  if (appSuspended) return;
   const k = bgm.cur;
   if (!k) return;
   if (track(k).paused || bgm.pending === k) {
@@ -674,7 +757,10 @@ let favs = new Set(lsGet('sn_favs', []));
 function favKey() { return VN.story + '/' + VN.node; }
 
 function splitPages(text) {
-  const max = window.innerWidth < 720 ? 185 : 330;
+  const landscapePhone = window.innerHeight <= 600 && window.innerWidth > window.innerHeight;
+  const fontSize = Math.max(15, Math.min(18, window.innerWidth * .02));
+  const lines = Math.floor((Math.min(window.innerWidth - 32, 1050) - 90) / (fontSize * .54));
+  const max = landscapePhone ? Math.max(100, Math.min(260, lines * 2)) : (window.innerWidth < 720 ? 185 : 330);
   const paras = String(text).split(/\n{2,}/);
   const out = [];
   let buf = '';
@@ -705,21 +791,26 @@ function setBg(key, instant, zoom = 1) {
   const src = BG[key];
   if (!src) return;
   const Ael = $('bgA'), Bel = $('bgB');
-  const on  = VN.layer === 'A' ? Ael : Bel;
+  const on = VN.layer === 'A' ? Ael : Bel;
   const off = VN.layer === 'A' ? Bel : Ael;
   if (VN.bgKey === key) { on.querySelector('img').style.transform = zoom === 1 ? 'none' : 'scale(' + zoom + ')'; return; }
-  const _im = off.querySelector('img');
-  _im.src = src;
-  _im.style.objectPosition = '50% 50%';
-  _im.style.transform = zoom === 1 ? 'none' : 'scale(' + zoom + ')';
-  if (instant) { on.style.transition = 'none'; off.style.transition = 'none'; }
-  off.classList.add('on');
-  on.classList.remove('on');
-  VN.bgKey = key;
-  VN.layer = VN.layer === 'A' ? 'B' : 'A';
-  if (instant) requestAnimationFrame(() => requestAnimationFrame(() => {
-    on.style.transition = ''; off.style.transition = '';
-  }));
+  const request = VN.bgRequest = (VN.bgRequest || 0) + 1;
+  VN.bgReady = false;
+  const image = off.querySelector('img');
+  image.src = src; image.style.objectPosition = '50% 50%';
+  image.style.transform = zoom === 1 ? 'none' : 'scale(' + zoom + ')';
+  function show() {
+    if (request !== VN.bgRequest) return;
+    VN.bgReady = true;
+    if (instant) { on.style.transition = 'none'; off.style.transition = 'none'; }
+    off.classList.add('on'); on.classList.remove('on');
+    VN.bgKey = key; VN.layer = VN.layer === 'A' ? 'B' : 'A';
+    if (instant) requestAnimationFrame(() => requestAnimationFrame(() => { on.style.transition = ''; off.style.transition = ''; }));
+  }
+  function failed() { if (request === VN.bgRequest) { VN.bgReady = true; toast('Не удалось открыть иллюстрацию'); } }
+  if (image.complete && image.naturalWidth) show();
+  else if (image.decode) image.decode().then(show, failed);
+  else { image.onload = show; image.onerror = failed; }
 }
 
 function startStory(key, nodeId) {
@@ -874,6 +965,10 @@ function advance() {
   if (frame.classList.contains('hide-ui')) { frame.classList.remove('hide-ui'); return; }
   if (Date.now() < (VN.holdUntil || 0)) {
     if (VN.auto || VN.skip) { clearTimeout(VN.autoT); VN.autoT = setTimeout(advance, VN.holdUntil - Date.now() + 30); }
+    return;
+  }
+  if (VN.bgReady === false) {
+    if (VN.auto || VN.skip) { clearTimeout(VN.autoT); VN.autoT = setTimeout(advance, 100); }
     return;
   }
   if (VN.typing) { finishType(); return; }
@@ -1075,7 +1170,6 @@ document.addEventListener('click', e => {
       break;
     }
     case 'to-main': go('s-main'); break;
-    case 'next-page': break;
     case 'disclaimer-next': go('s-main'); break;
     case 'exit-no': go('s-main'); break;
     case 'quit': reallyQuit(); break;
@@ -1086,6 +1180,10 @@ document.addEventListener('click', e => {
     case 'history': openHistory(); break;
     case 'save': saveGame(); break;
     case 'load': loadGame(false); break;
+    case 'auto-read': closeOv('pause'); toggleAuto(); break;
+    case 'skip-read': closeOv('pause'); toggleSkip(); break;
+    case 'hide-ui': closeOv('pause'); frame.classList.add('hide-ui'); break;
+    case 'favorite': closeOv('pause'); $('star').click(); break;
     case 'help': closeOv('pause'); openOv('help'); break;
     case 'main-menu': closeAllOv(); go('s-main'); break;
     case 'exit': closeAllOv(); go('s-exit'); break;
@@ -1202,24 +1300,74 @@ document.addEventListener('keydown', e => {
 });
 
 /* ======================= СВАЙПЫ ======================= */
-let sx = 0, sy = 0, swipedAt = 0;
-frame.addEventListener('touchstart', e => {
-  const t = e.touches[0]; sx = t.clientX; sy = t.clientY;
-}, { passive:true });
-frame.addEventListener('touchend', e => {
-  if (cur !== 's-vn' || document.querySelector('.overlay.open')) return;
-  const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
-  if (Math.abs(dx) < 45 && Math.abs(dy) < 45) return;
-  swipedAt = Date.now();
-  if (dy < -70) openOv('pause');
-  else if (dy > 70) frame.classList.toggle('hide-ui');
-  else if (dx > 70) { stopSkip(); advance(); }
-}, { passive:true });
+let touchOrigin = null, controlOrigin = null, suppressStoryClickUntil = 0;
+frame.addEventListener('pointerdown', e => {
+  touchOrigin = null; controlOrigin = null; suppressStoryClickUntil = 0;
+  if (e.pointerType !== 'mouse') {
+    const button = e.target.closest('button');
+    if (button && !button.disabled) { controlOrigin = {button,x:e.clientX,y:e.clientY,id:e.pointerId}; return; }
+  }
+  if (e.pointerType === 'mouse' || cur !== 's-vn' || !$('clipPlayer').hidden || document.querySelector('.overlay.open')) return;
+  if (e.target.closest('button,input,select,.overlay')) return;
+  touchOrigin = {x:e.clientX,y:e.clientY,id:e.pointerId};
+}, {passive:true});
+frame.addEventListener('pointercancel', () => { touchOrigin = null; controlOrigin = null; });
+frame.addEventListener('pointerup', e => {
+  const control = controlOrigin; controlOrigin = null;
+  if (control && control.id === e.pointerId) {
+    if (Math.max(Math.abs(e.clientX-control.x),Math.abs(e.clientY-control.y)) < 20 && control.button.isConnected && !control.button.disabled) {
+      e.preventDefault(); suppressStoryClickUntil = performance.now() + 500;
+      control.button.focus({preventScroll:true}); control.button.click();
+    }
+    return;
+  }
+  const origin = touchOrigin; touchOrigin = null;
+  if (!origin || origin.id !== e.pointerId || cur !== 's-vn') return;
+  const dx = e.clientX - origin.x, dy = e.clientY - origin.y;
+  const distance = Math.max(Math.abs(dx),Math.abs(dy));
+  suppressStoryClickUntil = performance.now() + 500;
+  if (distance < 30) { stopSkip(); advance(); return; }
+  if (distance < 60) return;
+  if (Math.abs(dy) > Math.abs(dx)) {
+    if (dy < 0) openOv('pause');
+    else frame.classList.toggle('hide-ui');
+  } else if (dx > 0) { stopSkip(); advance(); }
+}, {passive:false});
+frame.addEventListener('click', e => {
+  if (e.isTrusted && e.detail !== 0 && performance.now() < suppressStoryClickUntil) {
+    e.preventDefault(); e.stopImmediatePropagation();
+  }
+}, true);
 
 /* ======================= ОВЕРЛЕИ ======================= */
 $$('.overlay').forEach(o => o.addEventListener('click', e => {
   if (e.target === o) o.classList.remove('open');
 }));
+
+
+function updateDialogClearance() { frame.style.setProperty('--dialog-height', Math.ceil($('dlg').getBoundingClientRect().height) + 'px'); }
+if (window.ResizeObserver) new ResizeObserver(updateDialogClearance).observe($('dlg'));
+window.addEventListener('resize', updateDialogClearance);
+updateDialogClearance();
+// Native app lifecycle and Android back navigation.
+let appSuspended = false;
+document.addEventListener('pause', () => {
+  appSuspended = true; stopAuto(); stopSkip(); cancelAnimationFrame(bgm.fadeFrame);
+  Object.values(bgm.el).forEach(a => a.pause()); Object.values(effects).forEach(a => a.pause());
+  if (!$('clipPlayer').hidden) { $('storyClip').pause(); $('playClip').hidden = false; }
+});
+document.addEventListener('resume', () => {
+  if (!appSuspended) return; appSuspended = false;
+  if ($('clipPlayer').hidden && bgm.cur) { track(bgm.cur).volume = 0; tryMusic(bgm.cur); fadeMusic(600); }
+});
+document.addEventListener('backbutton', () => {
+  if (!$('clipPlayer').hidden) { finishStoryClip(); return; }
+  const overlay = document.querySelector('.overlay.open');
+  if (overlay) { closeOv(overlay.id); return; }
+  if (cur === 's-vn') openOv('pause');
+  else if (cur === 's-main') go('s-exit');
+  else go('s-main');
+});
 
 /* ======================= ЗАГРУЗКА ======================= */
 let booted = false;
@@ -1240,7 +1388,7 @@ function boot() {
 const loadStartedAt = performance.now();
 $('loadScene').style.backgroundImage = 'url("' + A.main + '")';
 $('retryLoad').addEventListener('click', () => location.reload());
-const imageKeys = Object.keys(A).filter(k => A[k].startsWith('data:image/') || /\.(?:png|jpe?g|webp|svg)(?:[?#]|$)/i.test(A[k]));
+const imageKeys = ['main','variants','disclaimer','exit','btn_start','btn_settings','btn_back','hdr_variants','card_timofey','card_serega','resume_plate','bed','school1'].filter(k => A[k]);
 let loaded = 0, failed = 0;
 const bar = $('loadBar'), loadTxt = $('loadTxt');
 function updateLoad() {
