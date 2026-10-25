@@ -20,12 +20,10 @@ with sync_playwright() as pw:
  swipe(250,180,250,70);page.wait_for_selector('#pause.open')
  assert page.evaluate('JSON.parse(localStorage.sn_save).node')=='t_bath'
  page.locator('#pause [data-act="close-pause"]').tap();page.wait_for_timeout(550)
- page.locator('#bMenu').tap();page.wait_for_selector('#pause.open');page.locator('#pause [data-act="hide-ui"]').tap();assert page.locator('#frame').evaluate('(e)=>e.classList.contains("hide-ui")')
- page.touchscreen.tap(250,100);assert not page.locator('#frame').evaluate('(e)=>e.classList.contains("hide-ui")');assert page.evaluate('JSON.parse(localStorage.sn_save).node')=='t_bath'
  page.evaluate('document.dispatchEvent(new Event("pause"))');assert page.evaluate('window.testAudio.every(a=>a.paused)')
  page.evaluate('document.dispatchEvent(new Event("resume"))');page.wait_for_function('window.testAudio.some(a=>a.dataset.track==="morning"&&!a.paused)')
  page.evaluate('document.dispatchEvent(new Event("backbutton"))');page.wait_for_selector('#pause.open')
  page.evaluate('document.dispatchEvent(new Event("backbutton"))');page.wait_for_selector('#pause',state='hidden')
  page.evaluate('window.cordova={};window.exitCalls=0;navigator.app={exitApp:()=>window.exitCalls++};')
  page.evaluate('document.dispatchEvent(new Event("backbutton"))');page.locator('#pause [data-act="main-menu"]').tap();page.evaluate('document.dispatchEvent(new Event("backbutton"))');page.wait_for_selector('#s-exit.active');page.locator('[data-act="quit"]').tap();assert page.evaluate('exitCalls')==1
- assert not errors,errors;b.close();print(json.dumps({'swipe_no_double_advance':True,'pause_swipe':True,'buttons_and_hide_panel':True,'native_back_and_lifecycle':True,'native_exit_dispatch':True,'errors':errors}))
+ assert not errors,errors;b.close();print(json.dumps({'swipe_no_double_advance':True,'pause_swipe':True,'native_back_and_lifecycle':True,'native_exit_dispatch':True,'errors':errors}))

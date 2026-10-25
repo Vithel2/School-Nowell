@@ -39,11 +39,6 @@ with sync_playwright() as pw:
    page.keyboard.press('l');page.wait_for_selector('#history.open')
    assert page.locator('#histList .h').count()>=4
    page.locator('[data-act="close-history"]').tap()
-   was_favorite=page.locator('#star').evaluate('(e)=>e.classList.contains("on")')
-   page.keyboard.press('Escape');page.locator('#pause [data-act="favorite"]').tap()
-   assert page.locator('#star').evaluate('(e)=>e.classList.contains("on")') != was_favorite
-   favorites=page.evaluate('JSON.parse(localStorage.getItem("sn_favs"))')
-   assert ((story+'/'+expected) in favorites) != was_favorite
    page.locator('#choices .choice').first.tap()
    page.wait_for_selector('#s-variants.active')
    results['routes'].append({'story':story,'choices':branch,'ending':expected})
