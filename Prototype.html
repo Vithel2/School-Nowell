@@ -391,6 +391,10 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 #s-main .resume strong{font-size:clamp(8px,1.6dvh,15px);line-height:1.1}
 @media(max-height:350px){#settings .settings-lite{padding:10px 16px;gap:6px 12px}#settings .setting-control{padding:7px 10px}#settings .settings-footer{padding-top:5px}}
 
+/* Match the sloping top and receding right edge of the illustrated board. */
+#s-main .menu-btns{transform-origin:50% 0;transform:perspective(900px) rotateY(-9deg) rotateZ(2.2deg) skewX(1deg)}
+#s-vn.cinematic #dlg{visibility:hidden}
+#s-vn.cinematic #dlg .ctl{visibility:visible}
 </style>
 </head>
 <body>
@@ -577,13 +581,13 @@ const STORIES = {
       t_bed:{music:"morning", bg:'bed', who:'Тимофей', text:'«Кажется, кошмар приснился… Капец… Пойду умоюсь.»', next:'t_bath'},
       t_bath:{music:"morning", bg:'bath', text:'Утро начиналось как всегда, по-обычному.\nТимофей стоял у раковины и чистил зубы, пытаясь окончательно проснуться. Сон всё ещё неприятно вспоминался, но впереди был обычный день — по крайней мере, так ему казалось.', next:'t_dress'},
       t_dress:{zoom:1.08, music:"morning", bg:'dress', text:'Утро постепенно входило в привычное русло. Тимофей уже привёл себя в порядок и теперь собирался в школу.\n\nЗастёгивая рубашку, он невольно задумался о предстоящих уроках. В голове уже прокручивалась знакомая картина: как он незаметно достанет лаврушку прямо на уроке, а потом будет сидеть с самым невинным видом, будто ничего не произошло.\n\nНо была и ещё одна причина, по которой ему хотелось поскорее оказаться в школе.\n\nВаря.\n\nТимофей уже представлял, как снова увидит её, как украдкой будет поглядывать в её сторону и пытаться не выдать себя. Впрочем, залипать на неё у него получалось куда лучше, чем делать вид, что ему совершенно всё равно.\n\nКажется, сегодняшний день обещал быть интереснее обычного.', next:'t_road'},
-      t_road:{zoom:1.08, music:"morning", bg:'fox', text:'По дороге в школу вы заметили у обочины мёртвую лису. Вы остановились, не зная, как поступить.', choices:[
+      t_road:{zoom:1.08, music:null, bg:'fox', text:'По дороге в школу вы заметили у обочины мёртвую лису. Вы остановились, не зная, как поступить.', choices:[
         {t:'Заснять лису, чтобы показать потом своим одноклассникам', go:'t_film'},
         {t:'Пойти дальше, решив ничего не делать', go:'t_walk'}
       ]},
-      t_film:{music:null, bg:'fox', clip:'fox_clip', afterClipMusic:'school', text:'Вы достали телефон и записали видео. Лиса лежала неподвижно.\nУвиденное не выходило из головы. В школе вы решили показать запись одноклассникам.', next:'t_class'},
-      t_walk:{music:"morning", bg:'fox', text:'Вы убрали телефон и пошли дальше. Мёртвая лиса осталась лежать у обочины.\nДо школы было уже недалеко, но мысли всё возвращались к увиденному.', next:'t_class2'},
-      t_class:{music:"school", bg:'class', text:'От увиденного вы были сам не свой. И на вопрос ваших друзей:\n«Что с вами случилось, стряслось с утра?» — вы молча показываете видео своим одноклассникам. И те расхохотались от ваших переживаний, но Лаврова не смеялась. Она поняла вашу беду и сказала, что сама она вегетарианка и сама бы не стала кушать мясо, а только траву.', next:'t_break'},
+      t_film:{music:null, bg:'fox', clip:'fox_clip', afterClipMusic:null, text:'Вы достали телефон и записали видео. Лиса лежала неподвижно.\nУвиденное не выходило из головы.', next:'t_class'},
+      t_walk:{music:null, bg:'fox', text:'Вы убрали телефон и пошли дальше. Мёртвая лиса осталась лежать у обочины.\nДо школы было уже недалеко, но мысли всё возвращались к увиденному.', next:'t_class2'},
+      t_class:{music:"school", bg:'class', text:'От увиденного вы были сами не свои. И на вопрос ваших друзей:\n«Что с вами случилось, стряслось с утра?» — вы молча показываете видео своим одноклассникам. И те расхохотались от ваших переживаний, но Лаврова не смеялась. Она поняла вашу беду и сказала, что сама она вегетарианка и сама бы не стала кушать мясо, а только траву.', next:'t_break'},
       t_class2:{music:"school", bg:'class', text:'Первые уроки прошли как в тумане. Вы никому ничего не рассказали, да и рассказывать, по сути, было нечего.', next:'t_break'},
       t_break:{zoom:1.06, music:"school", bg:'class', text:'Прозвенел звонок на перемену. Что будете делать?', choices:[
         {t:'Просидеть все перемены', go:'t_sit'},
@@ -595,9 +599,9 @@ const STORIES = {
         {t:'Дёрнуть за косу', go:'t_varya_reach'},
         {t:'Ничего не делать, пройти мимо, а по пути сделать ей комплимент', go:'t_varya_compliment'}
       ]},
-      t_varya_reach:{music:"school", bg:'varya_reach', text:'Вы подошли ближе и протянули руку к её косе.', next:'t_varya_pull'},
-      t_varya_pull:{music:"school", bg:'varya_braid', text:'Вы дёрнули за косу. Варя резко остановилась.', next:'t_varya_turn'},
-      t_varya_turn:{music:"school", bg:'varya_turn', text:'Повисла мёртвая тишина. Варя смотрела на меня так, будто я враг народа, или хотела прожечь взглядом насквозь.', next:'t_varya_slap'},
+      t_varya_reach:{music:null, cinematic:1300, hold:900, bg:'varya_reach', text:'', next:'t_varya_pull'},
+      t_varya_pull:{music:null, cinematic:1100, hold:900, bg:'varya_braid', text:'', next:'t_varya_turn'},
+      t_varya_turn:{music:null, cinematic:1500, hold:900, bg:'varya_turn', text:'', next:'t_varya_slap'},
       t_varya_slap:{music:null, bg:'varya_angry', who:'Варвара', text:'ТИМОФЕЙ!', next:'t_varya_blackout'},
       t_varya_blackout:{music:null, bg:'black', hold:2200, sfx:'slap', text:'В следующую секунду вы почувствовали что-то обжигающее на своей щеке и зажмурились. И, открыв глаза…', next:'t_varya_after'},
       t_varya_after:{music:null, bg:'hall', text:'Варя уже уходила по коридору, будто ничего и не произошло. Вы так и остались стоять как вкопанные: щека горела, а в ушах всё ещё звенел её гневный крик.', next:'t_end'},
@@ -787,7 +791,7 @@ function splitPages(text) {
   const push = () => { if (buf.trim()) out.push(buf.trim()); buf = ''; };
 
   for (const para of paras) {
-    const sentences = para.match(/[^.!?…]+[.!?…]*/g) || [para];
+    const sentences = para.match(/[^.!?…]+[.!?…]*[»”"]*/g) || [para];
     for (let s of sentences) {
       s = s.trim();
       if (!s) continue;
@@ -853,7 +857,9 @@ function showNode(id, instant) {
   const n = st && st.nodes[id];
   if (!n) { toast('Сцена не найдена'); return; }
   const enteringStory = VN.node === null;
+  clearTimeout(VN.cinemaT);
   VN.node = id;
+  $('s-vn').classList.toggle('cinematic', !!n.cinematic);
   VN.holdUntil = Date.now() + (n.hold || 0);
   $('s-vn').classList.toggle('is-blackout', n.bg === 'black');
   VN.page = 0;
@@ -873,7 +879,7 @@ function showNode(id, instant) {
   $('nextMark').classList.remove('on');
   $('star').classList.toggle('on', favs.has(favKey()));
 
-  VN.hist.push({ who:n.who || '', text:n.text });
+  if (n.text) VN.hist.push({ who:n.who || '', text:n.text });
   if (VN.hist.length > 140) VN.hist.shift();
 
   saveAuto();
@@ -890,6 +896,27 @@ function updatePageMark() {
 }
 
 function renderPage() {
+  const node = STORIES[VN.story].nodes[VN.node];
+  if (node.cinematic) {
+    clearInterval(VN.timer); clearTimeout(VN.autoT);
+    VN.typing = false; VN.pageText = '';
+    $('txtGhost').textContent = ''; $('txtVis').textContent = '';
+    updatePageMark();
+    const scene = VN.node;
+    const readyAt = performance.now() + node.cinematic;
+    function nextShot() {
+      if (VN.node !== scene || cur !== 's-vn') return;
+      if (VN.bgReady === false || document.hidden || document.querySelector('.overlay.open')) {
+        VN.cinemaT = setTimeout(nextShot, 150); return;
+      }
+      if (performance.now() < readyAt || VN.transitioning) {
+        VN.cinemaT = setTimeout(nextShot, 100); return;
+      }
+      showNode(node.next);
+    }
+    VN.cinemaT = setTimeout(nextShot, node.cinematic);
+    return;
+  }
   const text = VN.pages[VN.page] || '';
   VN.pageText = text;
   $('txtGhost').textContent = text;
