@@ -79,9 +79,9 @@ button{font-family:inherit}
 /* ---------- visual novel ---------- */
 #s-vn{background:#000;cursor:pointer;transform:none;transition:opacity 1s ease,visibility 1s}
 #s-vn.is-transitioning{pointer-events:none}
-.layer{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;will-change:opacity}
+.layer{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .9s ease;will-change:opacity}
 .layer.on{opacity:1}
-.layer img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;animation:none;transform:none;background:#000}
+.layer img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;animation:none;transform:none;transform-origin:center;transition:transform .55s ease;background:#000}
 #s-vn .vignette{background:linear-gradient(180deg,transparent 35%,rgba(0,12,18,.42) 66%,rgba(0,10,14,.86) 100%),radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.52) 100%)}
 
 .hex{position:relative;--c:20px;--t:0px}
@@ -474,33 +474,33 @@ const STORIES = {
     nodes:{
       t_bed:{music:"morning", bg:'bed', who:'Тимофей', text:'«Кажется, кошмар приснился… Капец… Пойду умоюсь.»', next:'t_bath'},
       t_bath:{music:"morning", bg:'bath', text:'Утро начиналось как всегда, по-обычному.\nТимофей стоял у раковины и чистил зубы, пытаясь окончательно проснуться. Сон всё ещё неприятно вспоминался, но впереди был обычный день — по крайней мере, так ему казалось.', next:'t_dress'},
-      t_dress:{music:"morning", bg:'dress', text:'Утро постепенно входило в привычное русло. Тимофей уже привёл себя в порядок и теперь собирался в школу.\n\nЗастёгивая рубашку, он невольно задумался о предстоящих уроках. В голове уже прокручивалась знакомая картина: как он незаметно достанет лаврушку прямо на уроке, а потом будет сидеть с самым невинным видом, будто ничего не произошло.\n\nНо была и ещё одна причина, по которой ему хотелось поскорее оказаться в школе.\n\nВаря.\n\nТимофей уже представлял, как снова увидит её, как украдкой будет поглядывать в её сторону и пытаться не выдать себя. Впрочем, залипать на неё у него получалось куда лучше, чем делать вид, что ему совершенно всё равно.\n\nКажется, сегодняшний день обещал быть интереснее обычного.', next:'t_road'},
-      t_road:{music:"uneasy", bg:'fox', text:'По дороге в школу вы заметили у обочины мёртвую лису. Вы остановились, не зная, как поступить.', choices:[
+      t_dress:{zoom:1.08, music:"morning", bg:'dress', text:'Утро постепенно входило в привычное русло. Тимофей уже привёл себя в порядок и теперь собирался в школу.\n\nЗастёгивая рубашку, он невольно задумался о предстоящих уроках. В голове уже прокручивалась знакомая картина: как он незаметно достанет лаврушку прямо на уроке, а потом будет сидеть с самым невинным видом, будто ничего не произошло.\n\nНо была и ещё одна причина, по которой ему хотелось поскорее оказаться в школе.\n\nВаря.\n\nТимофей уже представлял, как снова увидит её, как украдкой будет поглядывать в её сторону и пытаться не выдать себя. Впрочем, залипать на неё у него получалось куда лучше, чем делать вид, что ему совершенно всё равно.\n\nКажется, сегодняшний день обещал быть интереснее обычного.', next:'t_road'},
+      t_road:{zoom:1.08, music:"morning", bg:'fox', text:'По дороге в школу вы заметили у обочины мёртвую лису. Вы остановились, не зная, как поступить.', choices:[
         {t:'Заснять лису, чтобы показать потом своим одноклассникам', go:'t_film'},
         {t:'Пойти дальше, решив ничего не делать', go:'t_walk'}
       ]},
-      t_film:{music:null, bg:'fox', clip:'fox_clip', afterClipMusic:'uneasy', text:'Вы достали телефон и записали видео. Лиса лежала неподвижно.\nУвиденное не выходило из головы. В школе вы решили показать запись одноклассникам.', next:'t_class'},
-      t_walk:{music:"uneasy", bg:'fox', text:'Вы убрали телефон и пошли дальше. Мёртвая лиса осталась лежать у обочины.\nДо школы было уже недалеко, но мысли всё возвращались к увиденному.', next:'t_class2'},
+      t_film:{music:null, bg:'fox', clip:'fox_clip', afterClipMusic:'school', text:'Вы достали телефон и записали видео. Лиса лежала неподвижно.\nУвиденное не выходило из головы. В школе вы решили показать запись одноклассникам.', next:'t_class'},
+      t_walk:{music:"morning", bg:'fox', text:'Вы убрали телефон и пошли дальше. Мёртвая лиса осталась лежать у обочины.\nДо школы было уже недалеко, но мысли всё возвращались к увиденному.', next:'t_class2'},
       t_class:{music:"school", bg:'class', text:'От увиденного вы были сам не свой. И на вопрос ваших друзей:\n«Что с вами случилось, стряслось с утра?» — вы молча показываете видео своим одноклассникам. И те расхохотались от ваших переживаний, но Лаврова не смеялась. Она поняла вашу беду и сказала, что сама она вегетарианка и сама бы не стала кушать мясо, а только траву.', next:'t_break'},
       t_class2:{music:"school", bg:'class', text:'Первые уроки прошли как в тумане. Вы никому ничего не рассказали, да и рассказывать, по сути, было нечего.', next:'t_break'},
-      t_break:{music:"school", bg:'class', text:'Прозвенел звонок на перемену. Что будете делать?', choices:[
+      t_break:{zoom:1.06, music:"school", bg:'class', text:'Прозвенел звонок на перемену. Что будете делать?', choices:[
         {t:'Просидеть все перемены', go:'t_sit'},
         {t:'Выйти в коридор', go:'t_hall'}
       ]},
       t_sit:{music:"school", bg:'class', text:'Вы остались за партой и просидели всю перемену, уткнувшись в учебник. Спокойно. Скучно. Но где-то за дверью определённо что-то происходило…', next:'t_end'},
       t_hall:{music:"school", bg:'hall', text:'«О, там же справа Тихан и Бурик… Повисла тишина в голове. Опять они ерундой какой-то занимаются, дурачатся! И ведь не надоест же им каждый раз устраивать такое посреди коридора…»', next:'t_varya'},
-      t_varya:{music:"varya", bg:'varya_walk', text:'Впереди по коридору шла Варя. Вы невольно замедлили шаг. Что будете делать?', choices:[
+      t_varya:{music:"school", bg:'varya_walk', text:'Впереди по коридору шла Варя. Вы невольно замедлили шаг. Что будете делать?', choices:[
         {t:'Дёрнуть за косу', go:'t_varya_reach'},
         {t:'Ничего не делать, пройти мимо, а по пути сделать ей комплимент', go:'t_varya_compliment'}
       ]},
-      t_varya_reach:{music:"varya", bg:'varya_reach', text:'Вы подошли ближе и протянули руку к её косе.', next:'t_varya_pull'},
-      t_varya_pull:{music:"uneasy", bg:'varya_braid', text:'Вы дёрнули за косу. Варя резко остановилась.', next:'t_varya_turn'},
-      t_varya_turn:{music:"uneasy", bg:'varya_turn', text:'Повисла мёртвая тишина. Варя смотрела на меня так, будто я враг народа, или хотела прожечь взглядом насквозь.', next:'t_varya_slap'},
+      t_varya_reach:{music:"school", bg:'varya_reach', text:'Вы подошли ближе и протянули руку к её косе.', next:'t_varya_pull'},
+      t_varya_pull:{music:"school", bg:'varya_braid', text:'Вы дёрнули за косу. Варя резко остановилась.', next:'t_varya_turn'},
+      t_varya_turn:{music:"school", bg:'varya_turn', text:'Повисла мёртвая тишина. Варя смотрела на меня так, будто я враг народа, или хотела прожечь взглядом насквозь.', next:'t_varya_slap'},
       t_varya_slap:{music:null, bg:'varya_angry', who:'Варвара', text:'ТИМОФЕЙ!', next:'t_varya_blackout'},
       t_varya_blackout:{music:null, bg:'black', hold:2200, sfx:'slap', text:'В следующую секунду вы почувствовали что-то обжигающее на своей щеке и зажмурились. И, открыв глаза…', next:'t_varya_after'},
-      t_varya_after:{music:"uneasy", bg:'hall', text:'Варя уже уходила по коридору, будто ничего и не произошло. Вы так и остались стоять как вкопанные: щека горела, а в ушах всё ещё звенел её гневный крик.', next:'t_end'},
-      t_varya_compliment:{music:"varya", bg:'varya_turn', who:'Тимофей', text:'«Варя, у тебя красивая коса».\n\nВы прошли мимо. Она обернулась на ваши слова, а вы пошли дальше, стараясь не выдать своего смущения.', next:'t_end'},
-      t_end:{music:"menu", bg:'hall', text:'Конец демо-главы.\nПродолжение следует…', choices:[
+      t_varya_after:{music:null, bg:'hall', text:'Варя уже уходила по коридору, будто ничего и не произошло. Вы так и остались стоять как вкопанные: щека горела, а в ушах всё ещё звенел её гневный крик.', next:'t_end'},
+      t_varya_compliment:{music:"school", bg:'varya_turn', who:'Тимофей', text:'«Варя, у тебя красивая коса».\n\nВы прошли мимо. Она обернулась на ваши слова, а вы пошли дальше, стараясь не выдать своего смущения.', next:'t_end'},
+      t_end:{music:null, bg:'hall', text:'Конец демо-главы.\nПродолжение следует…', choices:[
         {t:'К вариантам', go:'@variants'},
         {t:'Начать эту историю заново', go:'@restart'}
       ]}
@@ -514,13 +514,13 @@ const STORIES = {
         {t:'Украсть', go:'s2a'},
         {t:'Не трогать', go:'s2b'}
       ]},
-      s2a:{music:"uneasy", bg:'school2', text:'Тихо перетащил к себе. Никто не заметил — но завуч смотрит в камеру…', next:'s3'},
+      s2a:{music:"serega", bg:'school2', text:'Тихо перетащил к себе. Никто не заметил — но завуч смотрит в камеру…', next:'s3'},
       s2b:{music:"serega", bg:'school2', text:'Не стал рисковать. Пусть себе лежит. Зато спокойно.', next:'s3'},
       s3:{music:"evening", bg:'evening', who:'Серёга', text:'Учёба кончилась. Домой или сразу в клуб на районе?', choices:[
         {t:'В клуб на район', go:'s4'},
         {t:'Домой', go:'s4h'}
       ]},
-      s4:{music:"club", bg:'night', text:'Клуб ночью закрыт, свет не горит. Может, это и к лучшему…', choices:[
+      s4:{music:"evening", bg:'night', text:'Клуб ночью закрыт, свет не горит. Может, это и к лучшему…', choices:[
         {t:'К вариантам', go:'@variants'},
         {t:'Начать заново', go:'@restart'}
       ]},
@@ -558,7 +558,7 @@ cfg.muted = !!cfg.muted;
 function saveCfg() { lsSet('sn_cfg', cfg); }
 
 /* ======================= МУЗЫКА ======================= */
-const MUSIC = {"menu":{"asset":"music_menu","title":"Afterword","gain":0.5},"morning":{"asset":"music_morning","title":"Reflection On Water","gain":0.4},"school":{"asset":"music_school","title":"My Daily Life","gain":0.5},"varya":{"asset":"music_varya","title":"Timid Girl","gain":0.42},"uneasy":{"asset":"music_uneasy","title":"Just Think","gain":0.4},"serega":{"asset":"music_serega","title":"No Tresspassing","gain":0.48},"evening":{"asset":"music_evening","title":"Drown","gain":0.42},"club":{"asset":"music_club","title":"Miami","gain":0.4}};
+const MUSIC = {"menu":{"asset":"music_menu","title":"Afterword","gain":0.5},"morning":{"asset":"music_morning","title":"Reflection On Water","gain":0.4},"school":{"asset":"music_varya","title":"Timid Girl","gain":0.42},"varya":{"asset":"music_varya","title":"Timid Girl","gain":0.42},"uneasy":{"asset":"music_uneasy","title":"Just Think","gain":0.4},"serega":{"asset":"music_serega","title":"No Tresspassing","gain":0.48},"evening":{"asset":"music_evening","title":"Drown","gain":0.42},"club":{"asset":"music_club","title":"Miami","gain":0.4}};
 const bgm = { cur:null, el:{}, pending:null, fadeFrame:null };
 const effects = {};
 function track(k) {
@@ -701,16 +701,17 @@ function splitPages(text) {
   return out.length ? out : [String(text)];
 }
 
-function setBg(key, instant) {
+function setBg(key, instant, zoom = 1) {
   const src = BG[key];
   if (!src) return;
   const Ael = $('bgA'), Bel = $('bgB');
   const on  = VN.layer === 'A' ? Ael : Bel;
   const off = VN.layer === 'A' ? Bel : Ael;
-  if (VN.bgKey === key) return;
+  if (VN.bgKey === key) { on.querySelector('img').style.transform = zoom === 1 ? 'none' : 'scale(' + zoom + ')'; return; }
   const _im = off.querySelector('img');
   _im.src = src;
   _im.style.objectPosition = '50% 50%';
+  _im.style.transform = zoom === 1 ? 'none' : 'scale(' + zoom + ')';
   if (instant) { on.style.transition = 'none'; off.style.transition = 'none'; }
   off.classList.add('on');
   on.classList.remove('on');
@@ -748,7 +749,7 @@ function showNode(id, instant) {
   VN.pages = splitPages(n.text);
   clearInterval(VN.timer);
   clearTimeout(VN.autoT);
-  setBg(n.bg, instant || VN.bgKey === null);
+  setBg(n.bg, instant || VN.bgKey === null, n.zoom || 1);
 
   const dlg = $('dlg');
   if (VN.dialogAnim) VN.dialogAnim.cancel();
@@ -1239,7 +1240,7 @@ function boot() {
 const loadStartedAt = performance.now();
 $('loadScene').style.backgroundImage = 'url("' + A.main + '")';
 $('retryLoad').addEventListener('click', () => location.reload());
-const imageKeys = Object.keys(A).filter(k => A[k].startsWith('data:image/'));
+const imageKeys = Object.keys(A).filter(k => A[k].startsWith('data:image/') || /\.(?:png|jpe?g|webp|svg)(?:[?#]|$)/i.test(A[k]));
 let loaded = 0, failed = 0;
 const bar = $('loadBar'), loadTxt = $('loadTxt');
 function updateLoad() {

@@ -1,0 +1,17 @@
+{
+  "name": "school-nowell",
+  "version": "0.1.0",
+  "private": true,
+  "description": "School's Nowell offline Android test build",
+  "scripts": {
+    "prepare:web": "python3 scripts/prepare-android.py",
+    "build:apk": "bash scripts/build-apk.sh"
+  },
+  "devDependencies": {
+    "cordova": "12.0.0",
+    "cordova-android": "13.0.0"
+  },
+  "cordova": {
+    "platforms": ["android"]
+  }
+}
