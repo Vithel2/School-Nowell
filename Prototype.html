@@ -616,42 +616,24 @@ const STORIES = {
   serega: {
     title:'Серёга', start:'s_intro_yard', music:'serega',
     nodes:{
-      s_intro_yard:{music:"morning", bg:"oct_yard", text:"Осеннее утро. Во дворе стояла будка с надписью «СЕРЁГА».", next:"s_intro_peek"},
-      s_intro_peek:{music:"morning", bg:"oct_peek", text:"Из будки показался Серёга. Пора выбираться.", next:"s_intro_crawl"},
-      s_intro_crawl:{music:"morning", bg:"oct_crawl", text:"Он выбрался наружу и оглядел двор.", next:"s_intro_sit"},
-      s_intro_sit:{music:"morning", bg:"oct_sit", text:"Рядом с миской лежала кость. Серёга присел на траву.", next:"s_intro_reach"},
-      s_intro_reach:{music:"morning", bg:"oct_reach", text:"Он потянулся к кости.", next:"s_intro_bone"},
-      s_intro_bone:{music:"morning", bg:"oct_bone", text:"Серёга поднял находку и рассмотрел её.", next:"s_intro_inside"},
-      s_intro_inside:{music:"morning", bg:"oct_inside", text:"На секунду он заглянул обратно в будку.", next:"s_intro_bite"},
-      s_intro_bite:{music:"morning", bg:"oct_bite", text:"Серёга наклонился к миске.", next:"s_intro_leave"},
-      s_intro_leave:{music:"morning", bg:"oct_leave", text:"Теперь можно отправляться в школу.", next:"s_intro_car"},
-      s_intro_car:{music:"morning", bg:"oct_car", text:"По дороге Серёга остановился у машины. В руках у него был пакет чипсов.", next:"s_intro_window"},
-      s_intro_window:{music:"morning", bg:"oct_window", text:"Он наклонился к открытому окну.", next:"s_intro_depart"},
-      s_intro_depart:{music:"morning", bg:"oct_depart", text:"Разговор закончился. Серёга отошёл от машины с пакетом.", next:"s_intro_entrance"},
-      s_intro_entrance:{music:"morning", bg:"oct_entrance", text:"Школа уже рядом. Серёга поднялся к входной двери.", next:"s_intro_stairs"},
-      s_intro_stairs:{music:"morning", bg:"oct_stairs", text:"Он пошёл по школьной лестнице, не выпуская чипсы из рук.", next:"s_intro_chips"},
-      s_intro_chips:{music:"serega", bg:"oct_chips", text:"Добравшись до класса, Серёга сел за парту и открыл пакет.", next:"s_intro_visitor"},
-      s_intro_visitor:{music:"serega", bg:"oct_visitor", text:"За его спиной появился мужчина. Серёга пока ничего не замечал.", next:"s_intro_caught"},
-      s_intro_caught:{music:"serega", bg:"oct_caught", text:"Мужчина подошёл к парте и потянулся к пакету. Спокойно позавтракать не получилось.", next:"s1"},
-      s1:{music:"serega", bg:'school1', who:'Серёга', text:'Вы находитесь в школе. Уже 7:10, опаздываю. Надо бы украсть ашку у младших…', next:'s2'},
-      s2:{music:"serega", bg:'school2', who:'Выбор', text:'Урок. Тут у младшего лежит ашка в парте. Что делаем?', choices:[
-        {t:'Украсть', go:'s2a'},
-        {t:'Не трогать', go:'s2b'}
-      ]},
-      s2a:{music:"serega", bg:'school2', text:'Тихо перетащил к себе. Никто не заметил — но завуч смотрит в камеру…', next:'s3'},
-      s2b:{music:"serega", bg:'school2', text:'Не стал рисковать. Пусть себе лежит. Зато спокойно.', next:'s3'},
-      s3:{music:"evening", bg:'evening', who:'Серёга', text:'Учёба кончилась. Домой или сразу в клуб на районе?', choices:[
-        {t:'В клуб на район', go:'s4'},
-        {t:'Домой', go:'s4h'}
-      ]},
-      s4:{music:"evening", bg:'night', text:'Клуб ночью закрыт, свет не горит. Может, это и к лучшему…', choices:[
-        {t:'К вариантам', go:'@variants'},
-        {t:'Начать заново', go:'@restart'}
-      ]},
-      s4h:{music:"evening", bg:'evening', text:'Домой. Тихий вечер и никаких приключений. Иногда это лучший финал.', choices:[
-        {t:'К вариантам', go:'@variants'},
-        {t:'Начать заново', go:'@restart'}
-      ]}
+      s_intro_yard:{"music":"morning","bg":"oct_yard","text":"Осеннее утро. Во дворе стояла будка с надписью «СЕРЁГА».","next":"s_intro_peek"},
+      s_intro_peek:{"music":"morning","bg":"oct_peek","text":"Из будки показался Серёга.","next":"s_intro_crawl"},
+      s_intro_crawl:{"music":"morning","bg":"oct_crawl","text":"Он выбрался наружу.","next":"s_intro_sit"},
+      s_intro_sit:{"music":"morning","bg":"oct_sit","text":"Серёга присел у входа в будку и вспомнил про косточку внутри.","next":"s_intro_inside"},
+      s_intro_inside:{"music":"morning","bg":"oct_inside","text":"Он потянулся внутрь будки за косточкой.","next":"s_intro_bite"},
+      s_intro_bite:{"music":"morning","bg":"oct_bite","text":"Серёга наклонился и подхватил косточку.","next":"s_intro_reach"},
+      s_intro_reach:{"music":"morning","bg":"oct_reach","text":"Он достал косточку из будки наружу.","next":"s_intro_bone"},
+      s_intro_bone:{"music":"morning","bg":"oct_bone","text":"Теперь косточка была у него в руках.","next":"s_intro_leave"},
+      s_intro_leave:{"music":"morning","bg":"oct_leave","text":"Серёга зажал косточку в зубах и отправился в школу.","next":"s_intro_window"},
+      s_intro_window:{"music":"morning","bg":"oct_window","text":"По дороге Серёга заметил в машине пакет собачьего корма и заглянул в открытое окно.","next":"s_intro_car"},
+      s_intro_car:{"music":"morning","bg":"oct_car","text":"Он протянул руку в машину и украл пакет собачьего корма.","next":"s_intro_depart"},
+      s_intro_depart:{"music":"morning","bg":"oct_depart","text":"Серёга отошёл от машины с украденным кормом.","next":"s_intro_entrance"},
+      s_intro_entrance:{"music":"morning","bg":"oct_entrance","text":"С пакетом собачьего корма он добрался до школы.","next":"s_intro_stairs"},
+      s_intro_stairs:{"music":"morning","bg":"oct_stairs","text":"Серёга поднялся по лестнице, не выпуская корм из рук.","next":"s_intro_food"},
+      s_intro_food:{"music":"serega","bg":"oct_chips","text":"В классе Серёга сел за парту, открыл пакет и принялся есть собачий корм.","next":"s_intro_visitor"},
+      s_intro_visitor:{"music":"serega","bg":"oct_visitor","text":"За его спиной появился мужчина. Серёга продолжал есть корм.","next":"s_intro_caught"},
+      s_intro_caught:{"music":"serega","bg":"oct_caught","text":"Мужчина подошёл к парте и потянулся к пакету собачьего корма.","next":"s_end"},
+      s_end:{"music":null,"bg":"oct_caught","text":"Конец доступной главы Серёги. Продолжение следует…","choices":[{"t":"К вариантам","go":"@variants"},{"t":"Начать заново","go":"@restart"}]}
     }
   }
 };
@@ -670,6 +652,14 @@ function lsGet(key, def) {
 }
 function lsSet(key, val) {
   try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+}
+
+// Older Serega saves must not reopen the removed placeholder story.
+const oldSeregaSave = lsGet('sn_save', null);
+if (oldSeregaSave && oldSeregaSave.story === 'serega') {
+  if (oldSeregaSave.node === 's_intro_chips') oldSeregaSave.node = 's_intro_food';
+  if (!STORIES.serega.nodes[oldSeregaSave.node]) oldSeregaSave.node = STORIES.serega.start;
+  lsSet('sn_save', oldSeregaSave);
 }
 
 /* ======================= НАСТРОЙКИ ======================= */

@@ -20,7 +20,7 @@ with sync_playwright() as pw:
  results['settings']=True
  page.locator('[data-act="start"]').tap()
  for story in ['timofey','serega']:
-  for branch in ([(0,0),(1,0),(0,1,0),(0,1,1),(1,1,0),(1,1,1)] if story=='timofey' else list(itertools.product([0,1],repeat=2))):
+  for branch in ([(0,0),(1,0),(0,1,0),(0,1,1),(1,1,0),(1,1,1)] if story=='timofey' else [()]):
    page.locator('#s-variants [data-story="'+story+'"]').tap()
    for choice in branch:
     if page.locator('#clipPlayer').is_visible(): page.locator('#closeClip').tap()
@@ -34,7 +34,7 @@ with sync_playwright() as pw:
    page.keyboard.press('s')
    page.wait_for_function('document.querySelectorAll("#choices .choice").length===2')
    saved=page.evaluate('JSON.parse(localStorage.getItem("sn_save"))')
-   expected='t_end' if story=='timofey' else ('s4' if branch[1]==0 else 's4h')
+   expected='t_end' if story=='timofey' else 's_end'
    assert saved['node']==expected,(saved,expected)
    page.keyboard.press('l');page.wait_for_selector('#history.open')
    assert page.locator('#histList .h').count()>=4
@@ -44,7 +44,7 @@ with sync_playwright() as pw:
    results['routes'].append({'story':story,'choices':branch,'ending':expected})
  page.locator('#s-variants [data-act="to-main"]').tap()
  page.locator('#btnResume').tap();page.wait_for_selector('#s-vn.active')
- assert page.evaluate('JSON.parse(localStorage.getItem("sn_save")).node')=='s4h'
+ assert page.evaluate('JSON.parse(localStorage.getItem("sn_save")).node')=='s_end'
  page.reload();page.wait_for_selector('#loader',state='detached')
  page.keyboard.press('Enter');page.keyboard.press('Enter')
  page.wait_for_selector('#s-main.active');page.locator('#btnResume').tap()
