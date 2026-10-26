@@ -33,5 +33,5 @@ for key, value in assets.items():
 html = html[:match.start(1)] + json.dumps(assets, ensure_ascii=False, separators=(",", ":")) + html[match.end(1):]
 html = html.replace("<script>\n(() =>", '<script src="cordova.js"></script>\n<script>\n(() =>', 1)
 (target / "index.html").write_text(html, encoding="utf-8")
-(target / "build-info.json").write_text(json.dumps({"version": "0.1.3", "source_sha256": hashlib.sha256(source).hexdigest(), "asset_count": len(assets)}, indent=2) + "\n")
+(target / "build-info.json").write_text(json.dumps({"version": "0.1.4", "source_sha256": hashlib.sha256(source).hexdigest(), "asset_count": len(assets)}, indent=2) + "\n")
 print(f"Prepared {len(assets)} offline resources; HTML {len(html.encode('utf-8')):,} bytes")
