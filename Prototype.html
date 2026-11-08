@@ -394,7 +394,13 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @media(max-height:350px){#settings .settings-lite{padding:10px 16px;gap:6px 12px}#settings .setting-control{padding:7px 10px}#settings .settings-footer{padding-top:5px}}
 
 /* Match the sloping top and receding right edge of the illustrated board. */
-#s-main .menu-btns{transform-origin:50% 0;transform:perspective(900px) rotateY(9deg) rotateZ(-2.2deg) skewX(-1deg)}
+#s-main .menu-btns{transform:none}
+#s-main .menu-btns .stone,#s-main .menu-btns .resume{--board-angle:0deg;transform:perspective(900px) rotateY(-9deg) rotateZ(var(--board-angle));transform-origin:center}
+#s-main .menu-btns .stone:first-child{--board-angle:1deg}
+#s-main .menu-btns .stone:nth-child(2){--board-angle:-2deg}
+#s-main .menu-btns .resume{--board-angle:-5deg}
+#s-main .menu-btns .stone:hover,#s-main .menu-btns .resume:hover{transform:perspective(900px) rotateY(-9deg) rotateZ(var(--board-angle)) scale(1.025)}
+#s-main .menu-btns .stone:active,#s-main .menu-btns .resume:active{transform:perspective(900px) rotateY(-9deg) rotateZ(var(--board-angle)) scale(.97)}
 #s-vn.cinematic #dlg{visibility:hidden}
 #s-vn.cinematic #dlg .ctl{visibility:visible}
 
@@ -901,7 +907,8 @@ function showNode(id, instant) {
   const dlg = $('dlg');
   if (VN.dialogAnim) VN.dialogAnim.cancel();
   if (!VN.skip && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    VN.dialogAnim = dlg.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}], {duration:enteringStory ? 700 : 350,delay:enteringStory ? 250 : 0,easing:'ease-out',fill:'backwards'});
+    const center = n.referencePanel ? 'translateX(-50%) ' : '';
+    VN.dialogAnim = dlg.animate([{opacity:0,transform:center + 'translateY(12px)'},{opacity:1,transform:center + 'translateY(0)'}], {duration:enteringStory ? 700 : 350,delay:enteringStory ? 250 : 0,easing:'ease-out',fill:'backwards'});
   }
   dlg.classList.toggle('named', !!n.who);
   $('nameTab').textContent = n.who || '';
